@@ -27,10 +27,10 @@
 
     </script>
 
-    <script src="/js/site.js"></script>
+    <script src="{{site.baseurl}}/js/site.js"></script>
 
     {% for script in page.scripts %}
-    <script src="{{ script }}"></script>
+    <script src="{{site.baseurl}}/{{ script }}"></script>
     {% endfor %}
 
   </body>

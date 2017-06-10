@@ -1,10 +1,10 @@
 dataList = [];
 
-d3.csv("/datasets/sexual-harassment/positions.csv", function(error, positionData) {
+d3.csv("/the-stack/datasets/sexual-harassment/positions.csv", function(error, positionData) {
   if (error) throw error;
-  d3.csv('/datasets/sexual-harassment/genders.csv', function (error1, genderData) {
+  d3.csv('/the-stack/datasets/sexual-harassment/genders.csv', function (error1, genderData) {
     if (error1) throw error;
-    d3.csv('/datasets/sexual-harassment/punishments.csv', function (error2, punishmentData) {
+    d3.csv('/the-stack/datasets/sexual-harassment/punishments.csv', function (error2, punishmentData) {
       if (error2) throw error;
 
       var encodedPositionData = encodeURI(formatCSV(positionData, 'Position'));

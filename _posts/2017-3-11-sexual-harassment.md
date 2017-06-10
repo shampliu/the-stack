@@ -2,7 +2,7 @@
 title: Sexual Harrassment
 
 scripts:
-    - //d3js.org/d3.v4.min.js
+    - /js/lib/d3.v4.min.js
     - /js/posts/sexual-harassment/app.js
     - /js/posts/sexual-harassment/bubble-chart.js
     - /js/posts/sexual-harassment/table.js
