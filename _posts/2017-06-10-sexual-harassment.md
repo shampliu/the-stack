@@ -2,15 +2,15 @@
 title: Sexual Harrassment
 
 scripts:
-    - /js/lib/d3.v4.min.js
-    - /js/posts/sexual-harassment/app.js
-    - /js/posts/sexual-harassment/bubble-chart.js
-    - /js/posts/sexual-harassment/table.js
+    - /the-stack/js/lib/d3.v4.min.js
+    - /the-stack/js/posts/sexual-harassment/app.js
+    - /the-stack/js/posts/sexual-harassment/bubble-chart.js
+    - /the-stack/js/posts/sexual-harassment/table.js
 
 stylesheets:
-    - /css/tooltip.css
-    - /css/posts/sexual-harassment/tooltip.css
-    - /css/posts/sexual-harassment/table.css
+    - /the-stack/css/tooltip.css
+    - /the-stack/css/posts/sexual-harassment/tooltip.css
+    - /the-stack/css/posts/sexual-harassment/table.css
 ---
 
 <select style='margin:0 auto; display: flex; width: 200px; height: 3em;' id='bubbleChartDropdown'>

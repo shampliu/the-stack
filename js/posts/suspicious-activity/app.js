@@ -25,19 +25,19 @@ function getAge(birthday) {
   }
   else {
     // not a date
-    return -1; 
+    return -1;
   }
 }
 
 function formatDate(date) {
-  
+
   let d = new Date(date);
   return `${monthNames[d.getMonth()]} ${d.getDay()}, ${d.getFullYear()}`;
 }
 
 function formatRace(race) {
   switch(race) {
-    case 'A': 
+    case 'A':
       return "Other Asian";
     case 'B':
       return "Black";
@@ -85,7 +85,7 @@ $(document).ready(function () {
   let arrest = true;
   let suspicious = true;
 
-  d3.csv('/datasets/suspicious-activity/suspicious.csv', function(suspicious_data) {
+  d3.csv('/the-stack/datasets/suspicious-activity/suspicious.csv', function(suspicious_data) {
 
     suspicious_data.forEach(d => { d.Lat = +d.Lat; d.Long = +d.Long; });
 
@@ -99,8 +99,8 @@ $(document).ready(function () {
     suspicious_data.forEach(d => {
       let m = L.marker([d.Lat, d.Long], {icon: icon1}).addTo(map);
 
-      m.bindTooltip(`${d.Location}<br/>${formatDate(d.LogDate)}<br/><b>Age:</b> 
-                     ${d.Age} <b>Sex:</b> ${d.Sex == "Male" ? "M" : "F"} <b>Race:</b> 
+      m.bindTooltip(`${d.Location}<br/>${formatDate(d.LogDate)}<br/><b>Age:</b>
+                     ${d.Age} <b>Sex:</b> ${d.Sex == "Male" ? "M" : "F"} <b>Race:</b>
                      ${formatRace(d.Race)}`);
 
       all_markers.push({
@@ -110,16 +110,16 @@ $(document).ready(function () {
       });
     });
 
-    d3.csv('/datasets/suspicious-activity/arrests_loc.csv', function(arrest_data) {
-      arrest_data.forEach(d => { 
-        d.Lat = +d.Lat; 
-        d.Long = +d.Long; 
+    d3.csv('/the-stack/datasets/suspicious-activity/arrests_loc.csv', function(arrest_data) {
+      arrest_data.forEach(d => {
+        d.Lat = +d.Lat;
+        d.Long = +d.Long;
         d.Age = getAge(d["DOB"]);
       });
 
       let icon2 = new L.MakiMarkers.Icon({
-        // icon: "marker", 
-        color: "#ff4040", 
+        // icon: "marker",
+        color: "#ff4040",
         size: "m"
       });
       icon2.options.shadowSize = [0,0];
@@ -128,8 +128,8 @@ $(document).ready(function () {
         console.log(d);
         let m = L.marker([d.Lat, d.Long], {icon: icon2}).addTo(map);
 
-        m.bindTooltip(`${d.Location}<br/>${formatDate(d.LogDate)}<br/><b>Age:</b> 
-                       ${d.Age} <b>Sex:</b> ${d.Sex == "Male" ? "M" : "F"} <b>Race:</b> 
+        m.bindTooltip(`${d.Location}<br/>${formatDate(d.LogDate)}<br/><b>Age:</b>
+                       ${d.Age} <b>Sex:</b> ${d.Sex == "Male" ? "M" : "F"} <b>Race:</b>
                        ${formatRace(d.Race)}<br><b>Charge:</b> ${d.Charge}`);
 
         all_markers.push({
@@ -184,7 +184,7 @@ $(document).ready(function () {
               suspicious = target.checked == true ? true : false;
             }
           }
-          
+
           all_markers.forEach(m => {
             if ((m.data.Sex.toLowerCase() == gender || gender == "all") &&
                 (m.data.Race == race || race == "all") &&
@@ -198,15 +198,15 @@ $(document).ready(function () {
           })
         })
       })
-      initBarChart(suspicious_data, "suspicious"); 
-      initBarChart(arrest_data, "arrest"); 
+      initBarChart(suspicious_data, "suspicious");
+      initBarChart(arrest_data, "arrest");
     });
 
 
-      
+
   });
 
-  
+
 });
 
 function initBarChart(data, type) {
@@ -223,7 +223,7 @@ function initBarChart(data, type) {
 
   let color = d3.scaleOrdinal(d3.schemeCategory20c);
 
-  
+
 
   let genders = ["male", "female"];
   let races = ["A", "B", "C", "D", "F", "G", "H", "I", "J", "K", "L", "O", "P", "S", "U", "V", "W", "X", "Z"];
@@ -254,7 +254,7 @@ function initBarChart(data, type) {
           ind = 2;
           if (a > 65) {
             ind = 3;
-          } 
+          }
         }
       }
     }
@@ -262,7 +262,7 @@ function initBarChart(data, type) {
   });
 
   let currFilter = "gender";
-  let currDomain = genders; 
+  let currDomain = genders;
 
   g.append("g")
         .attr("class", "axis axis--x")
@@ -304,7 +304,7 @@ function initBarChart(data, type) {
         .duration(400)
         .ease(d3.easePolyInOut)
         .call(d3.axisLeft(y).ticks(10));
-    
+
     svg.select('.axis--x')
         .transition()
         .duration(400)
@@ -337,6 +337,6 @@ function initBarChart(data, type) {
 
 
 
-  
+
 
 }
