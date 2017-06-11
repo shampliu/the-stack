@@ -1,4 +1,22 @@
-function initBubbleChart(csvURI) {
+currVal = 0;
+currKeyword = "Position";
+
+function initBubbleChart(csvURI, v) {
+  currVal = v;
+  switch(v) {
+    case 0: 
+      currKeyword = "Position";
+      break;
+    case 1: 
+      currKeyword = "Gender";
+      break;
+    case 2: 
+      currKeyword = "Punishment";
+      break;
+    default:
+      break;
+  }
+
   var svg = d3.select("#bubble-chart"),
       width = +svg.attr("width"),
       height = +svg.attr("height");
@@ -117,7 +135,7 @@ function wrap(text, width) {
 
 function updateBubbleChart (value) {
   d3.selectAll('.node').remove();
-  initBubbleChart(dataList[value]);
+  initBubbleChart(dataList[value], +value);
 }
 
 function fillTooltip (d) {
@@ -125,7 +143,8 @@ function fillTooltip (d) {
 
   // SCHOOL NAME
   html += "<div class='left'><h1><b><u>";
-  switch (d.class) {
+  let school = d.class;
+  switch (school) {
     case 'UCLA': html += 'UC Los Angeles'; break;
     case 'UCB': html += 'UC Berkeley'; break;
     case 'UCM': html += 'UC Merced'; break;
@@ -140,26 +159,49 @@ function fillTooltip (d) {
   html += '</u></b></h1>';
 
   // PACKAGE
+  let key = d.package.split('.')[1];
   html += "<p>";
-  html += d.package.split('.')[1];
+  if (currVal == 1) { // format gender
+    let formatted = key.split('/').map(c => {
+      return c == "M" ? "Male" : "Female"
+    });
+
+    formatted[0] += " Complainant";
+    formatted[1] += " Respondent";
+
+    html += formatted.join(', ');
+  } else {
+    html += key;
+  }
   html += '</p>';
 
+  // RELATIVE PERCENTAGES
+  let totalInCategory = 0;
+  let totalInSchool = 0;
+  jsonDataList[currVal].forEach(r => {
+    if (r[currKeyword] == key) {
+      totalInCategory = r["UC Total"];
+    }
+    totalInSchool += Number(r[school]);
+  })
+
   // NUMBER OF PEOPLE
-  var numberOfPeople = +d.value;
+  let numberOfPeople = +d.value;
   html += '<p>';
   if (numberOfPeople === 1)
     html += numberOfPeople + ' Person'
   else
     html += numberOfPeople + ' People'
-  html += '</p></div>';
+  html += ' (' + Math.round(((numberOfPeople / totalInCategory)*100)*10)/10 + '% of category, ' + 
+          Math.round(((numberOfPeople / totalInSchool)*100)*10)/10 + '% of school)</p></div>';
 
   // PERCENTAGE
   html += "<div class='right'><span class='percentage'>"
-  var totalPeopleInClass = 0;
+  var totalPeople = 0;
   d.parent.children.forEach(function(d) {
-    totalPeopleInClass += (+d.data.value);
+    totalPeople += (+d.data.value);
   });
-  html += Math.round(((numberOfPeople / totalPeopleInClass)*100)*10)/10 + '%';
+  html += Math.round(((numberOfPeople / totalPeople)*100)*10)/10 + '%';
   html += '</span></div>'
 
   return html;
