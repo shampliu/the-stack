@@ -10,7 +10,6 @@ stylesheets:
   - //api.mapbox.com/mapbox.js/v3.0.1/mapbox.css
   - /the-stack/css/posts/suspicious-activity/app.css
   - /the-stack/css/posts/presidential-campaign-donations/tooltip.css
->>>>>>> suspicious-activity:_posts/2017-02-19-suspicious-activity.md
 scripts:
   - //d3js.org/d3.v4.min.js
   - //d3js.org/d3-transition.v1.min.js
